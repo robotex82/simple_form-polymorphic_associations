@@ -4,7 +4,7 @@ module SimpleFormPolymorphicAssociations
     #
     #     # app/controllers/people_controller.rb
     #     class PeopleController < ApplicationController
-    #       include SimpleFormPolymorphicAssociations::AutocompleteConcern
+    #       include SimpleFormPolymorphicAssociations::Controller::AutocompleteConcern
     #     end
     #
     module AutocompleteConcern

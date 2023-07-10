@@ -4,7 +4,8 @@ module SimpleFormPolymorphicAssociations
     #
     #     # app/models/person.rb
     #     class Person < ActiveRecord::Base
-    #       include SimpleFormPolymorphicAssociations::AutocompleteConcern
+    #       include SimpleFormPolymorphicAssociations::Model::AutocompleteConcern
+    #
     #       autocomplete scope: ->(matcher) { where("people.firstname LIKE :term", term: "%#{matcher.downcase}%") }, id_method: :id, text_method: :human
     #     end
     #
