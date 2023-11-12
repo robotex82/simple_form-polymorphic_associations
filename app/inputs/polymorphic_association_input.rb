@@ -46,13 +46,16 @@ class PolymorphicAssociationInput < SimpleForm::Inputs::Base
   def input(wrapper_options = nil)
     ActiveSupport::SafeBuffer.new.tap do |o|
       collection = options[:classes].keys.collect { |c| [c.model_name.human, c] }
-      label_method = :to_s
-      value_method = :to_s
+      instance_label_method = options.delete(:instance_label_method) || :to_s
       o << @builder.select("#{attribute_name}_type", collection, { include_blank: true }, { class: 'form-control select required polymorphic-association-class-select' })
       options[:classes].each do |klass, url|
         o << "<a class=\"polymorphic-association-autocomplete-link\" data-class=\"#{klass}\" href=\"#{url}\" ></a>".html_safe
       end
-      o << @builder.select("#{attribute_name}_id", [], {}, { class: 'form-control select required polymorphic-association-resource-select' })
+      id_select_collection = []
+      if selected_record = object.send(attribute_name).presence
+        id_select_collection << [selected_record.send(instance_label_method), selected_record.id]
+      end
+      o << @builder.select("#{attribute_name}_id", id_select_collection, {}, { class: 'form-control select required polymorphic-association-resource-select' })
     end
   end
 end
