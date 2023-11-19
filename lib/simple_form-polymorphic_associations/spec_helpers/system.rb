@@ -30,7 +30,7 @@ module SimpleFormPolymorphicAssociations
       def polymorphic_select(record, label_method, options)
         select record.class.model_name.human, from: options[:from].gsub(/_id]$/, "_type]")
         first(".select2-container", minimum: 1).click
-        find(".select2-search--dropdown input.select2-search__field").send_keys(user.send(label_method))
+        find(".select2-search--dropdown input.select2-search__field").send_keys(record.send(label_method))
         sleep(1)
         find(".select2-search--dropdown input.select2-search__field").send_keys(:enter)
       end
