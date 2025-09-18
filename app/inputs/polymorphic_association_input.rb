@@ -15,7 +15,7 @@ class PolymorphicAssociationInput < SimpleForm::Inputs::Base
   #
   #     # app/controllers/people_controller.rb
   #     class PeopleController < ApplicationController
-  #       include SimpleFormPolymorphicAssociations::AutocompleteConcern
+  #       include SimpleForm::PolymorphicAssociations::Controller::AutocompleteConcern
   #     end
   #
   # Then add the routing:
@@ -31,7 +31,7 @@ class PolymorphicAssociationInput < SimpleForm::Inputs::Base
   #
   #     # app/models/person.rb
   #     class Person < ActiveRecord::Base
-  #       include SimpleFormPolymorphicAssociations::AutocompleteConcern
+  #       include SimpleForm::PolymorphicAssociations::Model::AutocompleteConcern
   #       autocomplete scope: ->(matcher) { where("people.firstname LIKE :term", term: "%#{matcher.downcase}%") }, id_method: :id, text_method: :human
   #     end
   #
@@ -53,7 +53,9 @@ class PolymorphicAssociationInput < SimpleForm::Inputs::Base
       end
       id_select_collection = []
       if selected_record = object.send(attribute_name).presence
-        id_select_collection << [selected_record.send(instance_label_method), selected_record.id]
+        label_method = object.send(attribute_name).class.autocomplete_options[:text_method]
+        label = object.send(attribute_name).send(label_method)
+        id_select_collection << [label, selected_record.id]
       end
       o << @builder.select("#{attribute_name}_id", id_select_collection, {}, { class: 'form-control select required polymorphic-association-resource-select' })
     end

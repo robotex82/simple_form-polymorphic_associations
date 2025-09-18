@@ -1,5 +1,12 @@
 .bundle/
 log/*.log
 pkg/
+
+# Dummy app
+spec/dummy
+
+# Built gems
 *.gem
+
+# Backup files
 *~
