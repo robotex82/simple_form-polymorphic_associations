@@ -72,20 +72,12 @@ class VanillaAutocompleteInstance {
     this.input.placeholder = 'Type to search...';
     this.input.autocomplete = 'off';
     
-    // Set ID and name based on original select element
+    // Set ID based on original select element
     if (this.element.id) {
       this.input.id = this.element.id + '_autocomplete';
     }
-    if (this.element.name) {
-      // Handle both simple names and Rails-style nested names
-      if (this.element.name.includes('[') && this.element.name.includes(']')) {
-        // For names like "comment[resource_id]", convert to "comment[resource_id_autocomplete]"
-        this.input.name = this.element.name.replace(/\]$/, '_autocomplete]');
-      } else {
-        // For simple names, just append _autocomplete
-        this.input.name = this.element.name + '_autocomplete';
-      }
-    }
+    // Don't set name attribute - this prevents the autocomplete input from being submitted
+    // The original select element will handle the form submission
     
     // Create dropdown
     this.dropdown = document.createElement('div');

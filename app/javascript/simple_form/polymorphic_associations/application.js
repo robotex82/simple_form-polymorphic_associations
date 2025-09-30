@@ -2,6 +2,11 @@
 import PolymorphicAssociationAutocomplete from "simple_form/polymorphic_associations/autocomplete";
 import StylesManager from "simple_form/polymorphic_associations/styles";
 
+// show a greeting on load (support turbo)
+document.addEventListener("turbo:load", function() {
+  console.log("[SimpleForm::PolymorphicAssociations] ❤️");
+});
+
 class SimpleFormPolymorphicAssociationsApplication {
   constructor() {
     this.initialized = false;
